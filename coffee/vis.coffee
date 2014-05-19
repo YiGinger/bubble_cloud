@@ -416,7 +416,7 @@ texts = [
                       {key:"music",file:"Music.csv",name:"Music Department"}
                      {key:"physics",file:"Physics.csv",name:"Physics Department"}
                           {key:"education",file:"Education.csv",name:"Education Department"}
-                              {key:"Economics",file:"Economics.csv",name:"Economics Department"}
+                              {key:"economics",file:"Economics.csv",name:"Economics Department"}
                                   #{key:"math",file:"Mathematics.csv",name:"Mathematics Department"}
 ]
 

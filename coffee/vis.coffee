@@ -410,13 +410,13 @@ texts = [
 #  {key:"alice",file:"alice.csv",name:"Alice's Adventures in Wonderland"}
  # {key:"gulliver",file:"top_gulliver.csv",name:"Gulliver's Travels"}
    {key:"bubble",file:"bubble.csv",name:"CULPA"}
-    {key:"stat",file:"Statistics.csv",name:"Statistics Department"}
-    {key:"math",file:"Mathematics.csv",name:"Mathematics Department"}
-    {key:"astronomy",file:"Astronomy.csv",name:"Astronomy Department"}
-    {key:"music",file:"Music.csv",name:"Music Department"}
-    {key:"physics",file:"Physics.csv",name:"Physics Department"}
-    {key:"education",file:"Education.csv",name:"Education Department"}
-    {key:"economics",file:"Economics.csv",name:"Economics Department"}
+    {key:"stat",file:"Statistics150.csv",name:"Statistics Department"}
+    {key:"math",file:"Mathematics150.csv",name:"Mathematics Department"}
+    {key:"astronomy",file:"Astronomy150.csv",name:"Astronomy Department"}
+    {key:"music",file:"Music150.csv",name:"Music Department"}
+    {key:"physics",file:"Physics150.csv",name:"Physics Department"}
+    {key:"education",file:"Education150.csv",name:"Education Department"}
+    {key:"economics",file:"Economics150.csv",name:"Economics Department"}
                                 
 ]
 # ---

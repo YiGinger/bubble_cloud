@@ -418,7 +418,7 @@ texts = [
     {key:"education",file:"Education.csv",name:"Education Department"}
     {key:"economics",file:"Economics.csv",name:"Economics Department"}
                                 
-
+]
 # ---
 # jQuery document ready.
 # ---

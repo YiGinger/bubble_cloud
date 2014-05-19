@@ -405,12 +405,19 @@ root.plotData = (selector, data, plot) ->
     .call(plot)
 
 texts = [
-  {key:"sherlock",file:"top_sherlock.csv",name:"The Adventures of Sherlock Holmes"}
-  {key:"aesop",file:"top_aesop.csv",name:"Aesop's Fables"}
-  {key:"alice",file:"alice.csv",name:"Alice's Adventures in Wonderland"}
-  {key:"gulliver",file:"top_gulliver.csv",name:"Gulliver's Travels"}
-    {key:"bubble",file:"bubble.csv",name:"CULPA"}
-       {key:"math",file:"Mathematics.csv",name:"Mathematics Department"}
+ # {key:"sherlock",file:"top_sherlock.csv",name:"The Adventures of Sherlock Holmes"}
+ # {key:"aesop",file:"top_aesop.csv",name:"Aesop's Fables"}
+#  {key:"alice",file:"alice.csv",name:"Alice's Adventures in Wonderland"}
+ # {key:"gulliver",file:"top_gulliver.csv",name:"Gulliver's Travels"}
+   {key:"bubble",file:"bubble.csv",name:"CULPA"}
+       {key:"stat",file:"Statistics.csv",name:"Statistics Department"}
+              {key:"math",file:"Mathematics.csv",name:"Mathematics Department"}
+                  {key:"astronomy",file:"Astronomy.csv",name:"Astronomy Department"}
+                      {key:"music",file:"Music.csv",name:"Music Department"}
+                     {key:"physics",file:"Physics.csv",name:"Physics Department"}
+                          {key:"education",file:"Education.csv",name:"Education Department"}
+                              {key:"Economics",file:"Economics.csv",name:"Economics Department"}
+                                  #{key:"math",file:"Mathematics.csv",name:"Mathematics Department"}
 ]
 
 # ---

@@ -1,0 +1,175 @@
+Analysis of CUPLA in Columbia University
+========================================================
+# EDAV Final Project ---Yi Jiang(yj2306)
+
+# Introduction
+For my project I decided to apply text analysis skills to derive information from a dataset from CULPA, a website that allows students to review professors from past classes and to track other's opinions on their potential classes for the next semester.
+
+Using CULPA, students can write a review and comment on professor, course's content, and its workload. Other students have the option of agreeing or disagreeing with a particular review, and deciding whether a review is funny. Students also nominate professors for silver or gold nuggets, which are given to professors by CULPA based on their reviews.
+
+# Data
+The data from CULPA in JSON format. There are two files in the data, one with professors, and one with reviews. Rjson package in R Studio is applied to convert the JSON objects to R objects. In total there are about 3000 professors and 21000 reviews.The entire [dataset](http://www.columbia.edu/~zjn2101/culpadump.zip) can be found on their website.
+
+# Objective
+
+With this dataset,some exploratory data analysis can be applied to it. Try to ask some questions and look if we can find answer from this dataset. Those questions can be:
+- Who get more reviews? 
+- What are those words that are frequently used in reviews?
+- What's the distribution of nuggets in different departments?
+- Which department has the highest workload?
+
+I am not sure whether we can find answere of those questions from this dataset, but I can just do some exploratory analysis to see. We can also try to explore other interesting results from this dataset.
+
+# Analysis
+
+## Data Cleanup
+### Read Data
+The data is in the format of json, so I need to use R package rjson to read data. And the data I get is actually a very complex list, so I should also convert it into a dataframe object, which is more comfortable to use in R.
+
+```{r eval=FALSE}
+require(rjson)
+courses <- fromJSON(file="/volumes/bootcamp/documents/EDAV/courses new.json")
+prof <- fromJSON(file="/volumes/bootcamp/documents/EDAV/professors new.json")
+review <- fromJSON(file="/volumes/bootcamp/documents/EDAV/reviews new.json")
+require(plyr)
+dep <- llply(courses,function(x) x$departments  )
+ff<- function(x){
+  if (length(x)==0) {return (0) 
+  }else return (x[[1]]$name)
+}
+dept.name <- sapply(dep,ff)
+c.id <- sapply(courses,function(x) x$id)
+course.df <- data.frame(id=c.id,dept.name=dept.name)
+d.name <- sapply(review,function(x) course.df[which(course.df$id==x$courses),"dept.name"])
+d <- sapply(d.name,function(x) as.character(x))
+r.dept.name <- unlist(d)
+nugget <- sapply(prof,function(x) x$nugget)
+f.name <- sapply(prof, function(x) x$first_name)
+l.name <- sapply(prof, function(x) x$last_name)
+m.name <- sapply(prof,function(x) x$middle_name)
+p.id <- sapply(prof, function(x) x$id)
+prof.df <- data.frame(nug=nugget,f.name=f.name,l.name=l.name,p.id=p.id)
+r.id <- unlist(sapply(review,function(x) x$id))
+r.pr <- unlist(sapply(review,function(x) x$professors))
+r.fun <- unlist(sapply(review,function(x) x$funny))
+r.wl <- unlist(sapply(review, function(x) x$workload))
+r.disg<-unlist(sapply(review, function(x) x$disagree))
+r.g <- unlist(sapply(review, function(x) x$agree))
+r.review <- unlist(sapply(review, function(x) x$review))
+r.courses <- unlist(sapply(review, function(x) x$courses))
+r.date<- unlist(sapply(review, function(x) x$date))
+
+review.df <- cbind(id=r.id,pr=r.pr,fun=r.fun,disagree=r.disg,agree=r.g,workload=r.wl,
+                   review=r.review,courses=r.courses,date=r.date)
+review.df <- data.frame(review.df)
+
+```
+Through those pre-processing, I make all the information into three dataframes and all the review texts are in the colume "review" of dataframe _review.df_
+
+### Text Pre-processing
+As for data pre-processing, we used the tm package to build a corpus from character vectors of reviews. Then we applied a number of transformations, including changing letters to lower case, removing punctuations, removing white space, and removing stopwords. The remaining terms then became effective as the textual representation. 
+```{r eval=FALSE}
+load(".Rdata")
+texts<-r.review
+## vector, each element is a review
+require(tm)
+require(Snowball)
+corpus<-Corpus(VectorSource(texts))
+## do some standard processes of cleaning data
+corpus <- tm_map(corpus,tolower)
+corpus <- tm_map(corpus, removeWords, stopwords("english"))
+corpus <- tm_map(corpus,stripWhitespace)
+corpus <- tm_map(corpus,removePunctuation)
+# generate the document-term matrix
+dtm <-DocumentTermMatrix(corpus)
+term<-colnames(dtm)
+tabu<- tm_term_score(dtm,term,slam::col_sums)
+# generate the count for each words in dict
+sort.dict<-sort(tabu,decreasing=TRUE)
+dict <- names(sort.dict)
+```
+Through this changing, I can get the frequency of each words in the whole dataset of reviews.
+
+
+### Other Information
+
+## Text Mining
+
+After generating a document-term matrix from clean corpus, tasks like classification can be applied directly to it.
+
+For each review, we retrieved the actual textual contents of the review, and workload, the numbers of "agree"/ "disagree"/ "funny review"received by the review, and the nuggets assigned to each professor.
+
+We split the projects into two parts: analysis and prediction. For analysis we looked at the data, trying to characterize behavior across departments in terms of word use, workload declaration. The first predictive objective of this project is to predict whether or not a professor has a nugget and its type based on other variables with a main focus on review and workload. The second predictive goal is to predict whether the review is regarded as funny.
+
+## World Frequency
+
+I use the word frequency bubble to show the most frequenly used words in those reviews.
+
+```{r eval=FALSE}
+INSERT BUBBLE CLOUD
+```
+From the word bubble we can see that there is no very significant difference between word frequency in each departments.
+
+## Nuggets
+Nuggets is the evaluation CULPA gives to professors. It can be regarded as a categorical variable and has three levels:"gold","silver","none". I also seperate the nuggets data according to different deoartments. Here is a chart of the number of gold nuggets vs none nuggets in each departments.
+INSERT BUBBLE CHART
+
+In this chart, the x axis is the number of "none" nuggets in one department and the y axis is the number of "gold" nuggets in one department. So we can infer that the larger the slope of the line between bubble and origin, the better evaluation a department get in terms of the number of nuggets. From this chart, we can see that Philosophy department has the largest slope, i.e. has more propotion of "gold" nuggets, while the slope of Political Science department is relatively small. It is unreliable to make any infer just from this chart but it is intersting to guess the underlying reason. It might because students think philosophy is interesting but political science is boring, or the professor from phylosophy department are more likely to have great reputation and obtain the admiration from students.
+
+## Number of Reviews for each professors
+First I calculate the number of reviews each professors get and their department names.
+```{r eval=FALSE}
+pro.num.review<-ddply(review.new,.(pr),nrow)
+get.dept<-function(prid){review.new$dept.name[which(review.new$pr==prid)[1]]}
+a<-sapply(pro.num.review$pr,get.dept)
+pro.num.review$dept<-a
+```
+Then I list some of the  most popular professors on the whole. 
+INSERT TABLE
+
+From the table, we may notice an interesting thing that none of these professors get the "gold" nuggets. It shows that the professor who get many reviews may be more controversial and can't make everyone love him or her. Many reviews don't necessirily mean that the professor is very popular.
+
+We can also visualize this in r package rCharts.
+
+```{r setup, echo = F, message = F, cache = F}
+knitr::opts_chunk$set(tidy = F, message = F, comment = NA, results = 'asis')
+include <- function(file){
+  writeLines(paste('    ', readLines(file)))
+}
+options(RCHART_WIDTH = 900, RCHART_HEIGHT = 400)
+```
+
+```{r}
+require(rCharts)
+load("EDAV.Rdata")
+r2<-rPlot(revNum ~ name,data=pro_rev[1:6,],color="dept",type='bar')
+r2$set(width=800)
+r2
+```
+
+I also calculate the number of reviews grouping by departments. Here are the result of department "Mathematics" and "Statistics". To make it more clear, I just make it show the professors who get more than twice the average number of reviews, and group the other professors together and name it "Others".
+
+```{r}
+require(plyr)
+pie_pro("Statistics")
+```
+
+```{r}
+pie_pro("Economics")
+```
+We can also see the chart in other department just by loading "EDAV.Rdasta" and using the function "pie_pro" I write. 
+
+## Workload
+Regular expression can be applied to workload texts to extract information like "2 papers","no exam"," one midterm".After some analysis, we can acutally see some difference in workloads between differenet departments.
+![](https://yiginger.github.io/bubble_cloud/figure/workload.png)
+
+We can see that Chemistry and Chemical Engeering Department has the highest average number of midterms, and Anthropology has the least average number of midterms.
+It is interesting to see those results like the average papers and homework, but there is a problem that some information may not be able to extract only from regular expression.Maybe some students use the format that I didn't expect,so the analysis here can not include all the information about workload.
+
+# Summary
+In this project, I did some exploratory data analysis I've done for the CULPA data analysis. It includes the analysi of reviews, nuggets, workloads and the sometimes grouping by differenct departments. Some obvious conlcusions are that professors get more reviews are less likely to get "gold" nuggets.There are some difference in the workloads between different departments, but the word frequency in reviews of different departments do not have significant differences. 
+
+
+
+
+

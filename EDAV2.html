@@ -2,24 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    
-    
-    
-      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-  <meta name="description" content="">
-  <meta name="author" content="">
-
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-
-  <!-- CSS concatenated and minified via ant build script-->
-  <link rel="stylesheet" href="css/reset.css">
-  <link rel="stylesheet" href="css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/style.css">
-  <!-- end CSS-->
-
-  <script src="js/libs/modernizr-2.0.6.min.js"></script>
-    
 <title>Analysis of CUPLA in Columbia University</title>
 
 <!-- Styles for R syntax highlighter -->
@@ -235,35 +218,29 @@ I am not sure whether we can find answere of those questions from this dataset, 
 
 <h3>Read Data</h3>
 
-<p>courses &lt;- fromJSON(file=&ldquo;/volumes/bootcamp/documents/team20/final/dump/courses new.json&rdquo;)
-prof &lt;- fromJSON(file=&ldquo;/volumes/bootcamp/documents/team20/final/dump/professors new.json&rdquo;)
-review &lt;- fromJSON(file=&ldquo;/volumes/bootcamp/documents/team20/final/dump/reviews new.json&rdquo;)</p>
-
-<h2>Can someone change it into url? Or just change the path locally to read the data</h2>
-
-<p>require(plyr)</p>
-
-<p>dep &lt;- llply(courses,function(x) x$departments  )
-ff&lt;- function(x){
-  if (length(x)==0) {return (0) 
-  }else return (x[[1]]$name)
+<pre><code class="r">courses &lt;- fromJSON(file = &quot;/volumes/bootcamp/documents/EDAV/courses new.json&quot;)
+prof &lt;- fromJSON(file = &quot;/volumes/bootcamp/documents/EDAV/professors new.json&quot;)
+review &lt;- fromJSON(file = &quot;/volumes/bootcamp/documents/EDAV/reviews new.json&quot;)
+require(plyr)
+dep &lt;- llply(courses, function(x) x$departments)
+ff &lt;- function(x) {
+    if (length(x) == 0) {
+        return(0)
+    } else return(x[[1]]$name)
 }
-dept.name &lt;- sapply(dep,ff)
-c.id &lt;- sapply(courses,function(x) x$id)
-course.df &lt;- data.frame(id=c.id,dept.name=dept.name)
-d.name &lt;- sapply(review,function(x) course.df[which(course.df$id==x$courses),&ldquo;dept.name&rdquo;])
-d &lt;- sapply(d.name,function(x) as.character(x))
-r.dept.name &lt;- unlist(d)</p>
-
-<h1>review.df &lt;- cbind(review.df,r.dept.name)</h1>
-
-<pre><code class="r">nugget &lt;- sapply(prof, function(x) x$nugget)
+dept.name &lt;- sapply(dep, ff)
+c.id &lt;- sapply(courses, function(x) x$id)
+course.df &lt;- data.frame(id = c.id, dept.name = dept.name)
+d.name &lt;- sapply(review, function(x) course.df[which(course.df$id == x$courses), 
+    &quot;dept.name&quot;])
+d &lt;- sapply(d.name, function(x) as.character(x))
+r.dept.name &lt;- unlist(d)
+nugget &lt;- sapply(prof, function(x) x$nugget)
 f.name &lt;- sapply(prof, function(x) x$first_name)
 l.name &lt;- sapply(prof, function(x) x$last_name)
 m.name &lt;- sapply(prof, function(x) x$middle_name)
 p.id &lt;- sapply(prof, function(x) x$id)
 prof.df &lt;- data.frame(nug = nugget, f.name = f.name, l.name = l.name, p.id = p.id)
-
 r.id &lt;- unlist(sapply(review, function(x) x$id))
 r.pr &lt;- unlist(sapply(review, function(x) x$professors))
 r.fun &lt;- unlist(sapply(review, function(x) x$funny))
@@ -280,7 +257,9 @@ review.df &lt;- data.frame(review.df)
 
 </code></pre>
 
-<h3>Review Pre-processing</h3>
+<p>Through those pre-processing, I make all the information into three dataframes and all the review texts are in the colume &ldquo;review&rdquo; of dataframe <em>review.df</em></p>
+
+<h3>Text Pre-processing</h3>
 
 <p>As for data pre-processing, we used the tm package to build a corpus from character vectors of reviews. Then we applied a number of transformations, including changing letters to lower case, removing punctuations, removing white space, and removing stopwords. The remaining terms then became effective as the textual representation. </p>
 
@@ -302,12 +281,9 @@ tabu &lt;- tm_term_score(dtm, term, slam::col_sums)
 # generate the count for each words in dict
 sort.dict &lt;- sort(tabu, decreasing = TRUE)
 dict &lt;- names(sort.dict)
-sort.dict[1:10]
 </code></pre>
 
-<pre><code class="r">INSERT THE RESULT
-
-</code></pre>
+<p>Through this changing, I can get the frequency of each words in the whole dataset of reviews.</p>
 
 <h3>Other Information</h3>
 
@@ -322,66 +298,493 @@ sort.dict[1:10]
 <h2>World Frequency</h2>
 
 <p>I use the word frequency bubble to show the most frequenly used words in those reviews.</p>
-    
-    
-    
-    
-  <div id="container" class="container">
-      <select id="text-select">
-          <option value="bubble"> CULPA</option>
-           <option value="stat"> Statistics Department</option>
-           <option value="math"> Mathematics Department</option>
-           <option value="astronomy"> Astronomy Department</option>
-           <option value="music"> Music Department</option>
-           <option value="physics"> Physics Department</option>
-           <option value="education"> Education Department</option>
-           <option value="economics"> Economics Department</option>
-          
-      </select>
-      
-    <header>
-    <h1>Bubble Cloud</h1>
-    <h2>The most frequently used words in:</h2>
-      <h2 id="book-title"></h2>
-    </header>
-    <div id="main" role="main">
-      <div id="vis"></div>
-      <div id="status"></div>
-      <div id="controls">
-        <h3>Jitter</h3>
-        <form id="jitter" oninput="output.value = (jitter_input.value / 200).toFixed(3)" >
-          <input id="jitter_input" type="range" min="0" max="400" value="100" style="width:240px;">
-          <output name="output" for="input">0.5</output>
-        </form>
-      </div>
-    </div>
-  </div> <!--! end of #container -->
 
-
-  <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script> -->
-  <script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.2.min.js"><\/script>')</script>
-
-
-  <script defer src="js/plugins.js"></script>
-  <script src="js/libs/coffee-script.js"></script>
-  <script src="js/libs/d3.v2.js"></script>
-  <script type="text/coffeescript" src="coffee/vis.coffee"></script>
-  <script type="text/javascript">
-  </script>
-
-
-  <script> 
-    window._gaq = [['_setAccount','UA-17355070-1'],['_trackPageview'],['_trackPageLoadTime']];
-    Modernizr.load({
-      load: ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js'
-    });
-  </script>
-
-    
-
-<h2>Conclusion</h2>
+<pre><code class="r">INSERT BUBBLE CLOUD
+</code></pre>
 
 <p>From the word bubble we can see that there is no very significant difference between word frequency in each departments.</p>
+
+<h2>Nuggets</h2>
+
+<p>Nuggets is the evaluation CULPA gives to professors. It can be regarded as a categorical variable and has three levels:&quot;gold&rdquo;,&ldquo;silver&rdquo;,&ldquo;none&rdquo;. I also seperate the nuggets data according to different deoartments. Here is a chart of the number of gold nuggets vs none nuggets in each departments.
+</p>
+    
+    
+     
+<!-- BubbleChart generated in R 3.0.3 by googleVis 0.4.7 package -->
+<!-- Sat May 10 15:00:42 2014 -->
+
+
+<!-- jsHeader -->
+<script type="text/javascript">
+
+
+// jsData 
+function gvisDataBubbleChartID2615d3a3ee4 () {
+var data = new google.visualization.DataTable();
+var datajson =
+[
+ [
+ "African American Studies",
+20,
+7,
+"African American Studies" 
+],
+[
+ "American Studies",
+9,
+2,
+"American Studies" 
+],
+[
+ "Anthropology",
+220,
+17,
+"Anthropology" 
+],
+[
+ "Applied Physics and Applied Mathematics",
+43,
+3,
+"Applied Physics and Applied Mathematics" 
+],
+[
+ "Archaeology",
+4,
+0,
+"Archaeology" 
+],
+[
+ "Architecture",
+27,
+3,
+"Architecture" 
+],
+[
+ "Art History",
+172,
+20,
+"Art History" 
+],
+[
+ "Asian American Studies",
+6,
+0,
+"Asian American Studies" 
+],
+[
+ "Astronomy",
+91,
+9,
+"Astronomy" 
+],
+[
+ "Biology & Biomedical Engineering",
+212,
+22,
+"Biology & Biomedical Engineering" 
+],
+[
+ "Business",
+13,
+1,
+"Business" 
+],
+[
+ "Center for Study of Ethnicity and Race",
+23,
+2,
+"Center for Study of Ethnicity and Race" 
+],
+[
+ "Chemistry and Chemical Engineering",
+409,
+31,
+"Chemistry and Chemical Engineering" 
+],
+[
+ "Civil Engineering",
+14,
+0,
+"Civil Engineering" 
+],
+[
+ "Classics",
+81,
+3,
+"Classics" 
+],
+[
+ "Computer Science",
+302,
+31,
+"Computer Science" 
+],
+[
+ "Continuing Education",
+4,
+0,
+"Continuing Education" 
+],
+[
+ "Dance",
+90,
+7,
+"Dance" 
+],
+[
+ "Earth and Environmental Engineering",
+14,
+1,
+"Earth and Environmental Engineering" 
+],
+[
+ "Earth and Environmental Science",
+105,
+9,
+"Earth and Environmental Science" 
+],
+[
+ "East-Asian Languages and Cultures",
+269,
+31,
+"East-Asian Languages and Cultures" 
+],
+[
+ "Ecology, Evolution, and Environmental Biology",
+51,
+3,
+"Ecology, Evolution, and Environmental Biology" 
+],
+[
+ "Economics",
+489,
+51,
+"Economics" 
+],
+[
+ "Education",
+9,
+1,
+"Education" 
+],
+[
+ "Electrical Engineering",
+44,
+5,
+"Electrical Engineering" 
+],
+[
+ "English and Comparative Literature",
+596,
+44,
+"English and Comparative Literature" 
+],
+[
+ "Film",
+61,
+3,
+"Film" 
+],
+[
+ "First-Year Seminars",
+103,
+10,
+"First-Year Seminars" 
+],
+[
+ "French",
+236,
+23,
+"French" 
+],
+[
+ "Germanic Languages and Literature  ",
+59,
+7,
+"Germanic Languages and Literature  " 
+],
+[
+ "History",
+570,
+44,
+"History" 
+],
+[
+ "Human Rights",
+7,
+0,
+"Human Rights" 
+],
+[
+ "Industrial Engineering and Operations Research",
+101,
+6,
+"Industrial Engineering and Operations Research" 
+],
+[
+ "Italian",
+130,
+7,
+"Italian" 
+],
+[
+ "Latino Studies",
+5,
+0,
+"Latino Studies" 
+],
+[
+ "Law School",
+2,
+0,
+"Law School" 
+],
+[
+ "Mathematics",
+567,
+55,
+"Mathematics" 
+],
+[
+ "Mechanical Engineering",
+20,
+3,
+"Mechanical Engineering" 
+],
+[
+ "Medicine",
+1,
+0,
+"Medicine" 
+],
+[
+ "Middle Eastern, South Asian, and African Studies",
+196,
+11,
+"Middle Eastern, South Asian, and African Studies" 
+],
+[
+ "Music",
+154,
+12,
+"Music" 
+],
+[
+ "Philosophy",
+218,
+34,
+"Philosophy" 
+],
+[
+ "Physical Education",
+45,
+3,
+"Physical Education" 
+],
+[
+ "Physical Therapy",
+0,
+1,
+"Physical Therapy" 
+],
+[
+ "Physics",
+249,
+22,
+"Physics" 
+],
+[
+ "Political Science",
+552,
+35,
+"Political Science" 
+],
+[
+ "Psychology",
+495,
+33,
+"Psychology" 
+],
+[
+ "Religion",
+144,
+11,
+"Religion" 
+],
+[
+ "School of International & Public Affairs",
+18,
+1,
+"School of International & Public Affairs" 
+],
+[
+ "School of Journalism",
+3,
+0,
+"School of Journalism" 
+],
+[
+ "Slavic Languages",
+71,
+8,
+"Slavic Languages" 
+],
+[
+ "Sociology",
+172,
+18,
+"Sociology" 
+],
+[
+ "Spanish and Portuguese",
+357,
+32,
+"Spanish and Portuguese" 
+],
+[
+ "Speech",
+3,
+0,
+"Speech" 
+],
+[
+ "Statistics",
+141,
+15,
+"Statistics" 
+],
+[
+ "Sustainable Development",
+1,
+0,
+"Sustainable Development" 
+],
+[
+ "Swedish",
+5,
+2,
+"Swedish" 
+],
+[
+ "Theater",
+25,
+2,
+"Theater" 
+],
+[
+ "Underwater Basket Weaving",
+15,
+1,
+"Underwater Basket Weaving" 
+],
+[
+ "Urban Studies",
+50,
+4,
+"Urban Studies" 
+],
+[
+ "Visual Arts",
+39,
+3,
+"Visual Arts" 
+],
+[
+ "Women's Studies",
+56,
+6,
+"Women's Studies" 
+],
+[
+ "Writing",
+106,
+13,
+"Writing" 
+] 
+];
+data.addColumn('string','dept.name');
+data.addColumn('number','none');
+data.addColumn('number','gold');
+data.addColumn('string','dept.name.1');
+data.addRows(datajson);
+return(data);
+}
+
+
+// jsDrawChart
+function drawChartBubbleChartID2615d3a3ee4() {
+var data = gvisDataBubbleChartID2615d3a3ee4();
+var options = {};
+options["hAxis"] = {minValue:75, maxValue:125};
+options["hAxis.textPosition"] = "none";
+options["width"] =    800;
+options["height"] =    600;
+
+
+    var chart = new google.visualization.BubbleChart(
+    document.getElementById('BubbleChartID2615d3a3ee4')
+    );
+    chart.draw(data,options);
+    
+
+}
+  
+
+
+// jsDisplayChart
+(function() {
+var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+var chartid = "corechart";
+  
+// Manually see if chartid is in pkgs (not all browsers support Array.indexOf)
+var i, newPackage = true;
+for (i = 0; newPackage && i < pkgs.length; i++) {
+if (pkgs[i] === chartid)
+newPackage = false;
+}
+if (newPackage)
+  pkgs.push(chartid);
+  
+// Add the drawChart function to the global list of callbacks
+callbacks.push(drawChartBubbleChartID2615d3a3ee4);
+})();
+function displayChartBubbleChartID2615d3a3ee4() {
+  var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+  var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+  window.clearTimeout(window.__gvisLoad);
+  // The timeout is set to 100 because otherwise the container div we are
+  // targeting might not be part of the document yet
+  window.__gvisLoad = setTimeout(function() {
+  var pkgCount = pkgs.length;
+  google.load("visualization", "1", { packages:pkgs, callback: function() {
+  if (pkgCount != pkgs.length) {
+  // Race condition where another setTimeout call snuck in after us; if
+  // that call added a package, we must not shift its callback
+  return;
+}
+while (callbacks.length > 0)
+callbacks.shift()();
+} });
+}, 100);
+}
+
+
+// jsFooter
+</script>
+
+
+<!-- jsChart -->  
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartBubbleChartID2615d3a3ee4"></script>
+
+
+<!-- divChart -->
+  
+<div id="BubbleChartID2615d3a3ee4"
+  style="width: 800px; height: 600px;">
+</div>
+
 
 </body>
 

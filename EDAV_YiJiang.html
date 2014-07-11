@@ -2,7 +2,21 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
+  <title>EDAV final project --Yi Jiang </title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <!-- CSS concatenated and minified via ant build script-->
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <!-- end CSS-->
+
+  <script src="js/libs/modernizr-2.0.6.min.js"></script>
 <title>Analysis of CUPLA in Columbia University</title>
 
 <!-- Styles for R syntax highlighter -->
@@ -37,6 +51,14 @@
    pre .string {
      color: #d14;
    }
+    
+    .tg  {border-collapse:collapse;border-spacing:0;border-color:#aabcfe;}
+.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#aabcfe;color:#669;background-color:#e8edff;}
+.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#aabcfe;color:#039;background-color:#b9c9fe;}
+.tg .tg-0ord{text-align:right}
+.tg .tg-ifyx{background-color:#D2E4FC;text-align:right}
+.tg .tg-s6z2{text-align:center}
+.tg .tg-vn4c{background-color:#D2E4FC}
 </style>
 
 <!-- R syntax highlighter -->
@@ -191,7 +213,7 @@ hr {
 <body>
 <h1>Analysis of CUPLA in Columbia University</h1>
 
-<h1>EDAV Final Project &mdash;Yi Jiang(yj2306)</h1>
+<h1>Exploratory Data Analysi And Visualization &mdash;Yi Jiang(yj2306)</h1>
 
 <h1>Introduction</h1>
 
@@ -201,16 +223,20 @@ hr {
 
 <h1>Data</h1>
 
-<p>The data from CULPA in JSON format. There are two files in the data, one with professors, and one with reviews. Rjson package in R Studio is applied to convert the JSON objects to R objects. In total there are about 3000 professors and 21000 reviews.The entire <a href="http://www.columbia.edu/%7Ezjn2101/culpadump.zip">dataset</a> can be found on their website.</p>
+<p>The data from CULPA in JSON format. There are two files in the data, one with professors, and one with reviews. Rjson package in R Studio is applied to convert the JSON objects to R objects. In total there are about 3000 professors and 21000 reviews.The entire dataset can be found on their website.<a href="http://www.culpa.info/">http://www.culpa.info/</a> </p>
 
 <h1>Objective</h1>
 
-<p>With this dataset,some exploratory data analysis can be applied to it. Try to ask some questions and look if we can find answer from this dataset. Those questions can be:
-1. Is there any relationship between the workload and the evaluation of a professor?(i.e. the nugget of the professor is &ldquo;none&rdquo; or &ldquo;silver&rdquo; or &ldquo;gold&rdquo;)
-2. Are there any difference in words frequency in reviews from different departments?
-3. What&#39;s the distribution of nuggets in different departments?
-4. What kind of reviews would get most &ldquo;agree&rdquo;/&ldquo;disagree&rdquo;/&ldquo;fun&rdquo;?
-I am not sure whether we can find answere of those questions from this dataset, but I can just do some exploratory analysis to see. </p>
+<p>With this dataset,some exploratory data analysis can be applied to it. Try to ask some questions and look if we can find answer from this dataset. Those questions can be:</p>
+
+<ul>
+<li>Who get more reviews? </li>
+<li>What are those words that are frequently used in reviews?</li>
+<li>What&#39;s the distribution of nuggets in different departments?</li>
+<li>Which department has the highest workload?</li>
+</ul>
+
+<p>We can just do some exploratory analysis to see. Many algorithms in data mining and machine learning can also be applied to explore other interesting results from this dataset.</p>
 
 <h1>Analysis</h1>
 
@@ -218,7 +244,10 @@ I am not sure whether we can find answere of those questions from this dataset, 
 
 <h3>Read Data</h3>
 
-<pre><code class="r">courses &lt;- fromJSON(file = &quot;/volumes/bootcamp/documents/EDAV/courses new.json&quot;)
+<p>The data is in the format of json, so I need to use R package rjson to read data. And the data I get is actually a very complex list, so I should also convert it into a dataframe object, which is more comfortable to use in R.</p>
+
+<pre><code class="r">require(rjson)
+courses &lt;- fromJSON(file = &quot;/volumes/bootcamp/documents/EDAV/courses new.json&quot;)
 prof &lt;- fromJSON(file = &quot;/volumes/bootcamp/documents/EDAV/professors new.json&quot;)
 review &lt;- fromJSON(file = &quot;/volumes/bootcamp/documents/EDAV/reviews new.json&quot;)
 require(plyr)
@@ -291,18 +320,76 @@ dict &lt;- names(sort.dict)
 
 <p>After generating a document-term matrix from clean corpus, tasks like classification can be applied directly to it.</p>
 
-<p>For each review, we retrieved the actual textual contents of the review, and workload, the numbers of &ldquo;agree&rdquo;/ &ldquo;disagree&rdquo;/ &ldquo;funny review&quot;received by the review, and the nuggets assigned to each professor.</p>
+<p>For each review, I retrieved the actual textual contents of the review, and workload, the numbers of &ldquo;agree&rdquo;/ &ldquo;disagree&rdquo;/ &ldquo;funny review&quot;received by the review, and the nuggets assigned to each professor.</p>
 
-<p>We split the projects into two parts: analysis and prediction. For analysis we looked at the data, trying to characterize behavior across departments in terms of word use, workload declaration. The first predictive objective of this project is to predict whether or not a professor has a nugget and its type based on other variables with a main focus on review and workload. The second predictive goal is to predict whether the review is regarded as funny.</p>
+<p>I split the projects into two parts: analysis and prediction. For analysis we looked at the data, trying to characterize behavior across departments in terms of word use, workload declaration. The first predictive objective of this project is to predict whether or not a professor has a nugget and its type based on other variables with a main focus on review and workload. The second predictive goal is to predict whether the review is regarded as funny.</p>
 
 <h2>World Frequency</h2>
 
 <p>I use the word frequency bubble to show the most frequenly used words in those reviews.</p>
 
-<pre><code class="r">INSERT BUBBLE CLOUD
-</code></pre>
+
+  <div id="container" class="container">
+      <select id="text-select">
+          <option value="workload"> Workload</option>
+          <option value="bubble"> CULPA</option>
+           <option value="stat"> Statistics Department</option>
+           <option value="math"> Mathematics Department</option>
+           <option value="astronomy"> Astronomy Department</option>
+           <option value="music"> Music Department</option>
+           <option value="physics"> Physics Department</option>
+           <option value="education"> Education Department</option>
+           <option value="economics"> Economics Department</option>
+          
+      </select>
+    <header>
+    <h1>Bubble Cloud</h1>
+    <h2>The most frequently used words in:</h2>
+      <h2 id="book-title"></h2>
+    </header>
+    <div id="main" role="main">
+      <div id="vis"></div>
+      <div id="status"></div>
+      <div id="controls">
+        <h3>Jitter</h3>
+        <form id="jitter" oninput="output.value = (jitter_input.value / 200).toFixed(3)" >
+          <input id="jitter_input" type="range" min="0" max="400" value="100" style="width:240px;">
+          <output name="output" for="input">0.5</output>
+        </form>
+      </div>
+    </div>
+  </div> <!--! end of #container -->
+
+
+  <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script> -->
+  <script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.2.min.js"><\/script>')</script>
+
+
+  <script defer src="js/plugins.js"></script>
+  <script src="js/libs/coffee-script.js"></script>
+  <script src="js/libs/d3.v2.js"></script>
+  <script type="text/coffeescript" src="coffee/vis.coffee"></script>
+  <script type="text/javascript">
+  </script>
+
+
+  <script> 
+    window._gaq = [['_setAccount','UA-17355070-1'],['_trackPageview'],['_trackPageLoadTime']];
+    Modernizr.load({
+      load: ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js'
+    });
+  </script>
+
+
+  <!--[if lt IE 7 ]>
+    <script src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.3/CFInstall.min.js"></script>
+    <script>window.attachEvent('onload',function(){CFInstall.check({mode:'overlay'})})</script>
+  <![endif]-->
+  
 
 <p>From the word bubble we can see that there is no very significant difference between word frequency in each departments.</p>
+
+    <p>I also applied the Niave Bayes Classifier to try to predict whehter a reivew is funny throught the frequency of each words, it turns out that the prediction is not reliable at all. It means that there is no significant difference in words frequency between funny and not funny reviews</p>
 
 <h2>Nuggets</h2>
 
@@ -310,7 +397,7 @@ dict &lt;- names(sort.dict)
 </p>
     
     
-     
+        
 <!-- BubbleChart generated in R 3.0.3 by googleVis 0.4.7 package -->
 <!-- Sat May 10 15:00:42 2014 -->
 
@@ -786,10 +873,182 @@ callbacks.shift()();
 </div>
 
 
+<<<<<<< HEAD:EDAV2.html
     
     
     
     
+=======
+
+<p>In this chart, the x axis is the number of &ldquo;none&rdquo; nuggets in one department and the y axis is the number of &ldquo;gold&rdquo; nuggets in one department. So we can infer that the larger the slope of the line between bubble and origin, the better evaluation a department get in terms of the number of nuggets. From this chart, we can see that Philosophy department has the largest slope, i.e. has more propotion of &ldquo;gold&rdquo; nuggets, while the slope of Political Science department is relatively small. It is unreliable to make any infer just from this chart but it is intersting to guess the underlying reason. It might because students think philosophy is interesting but political science is boring, or the professor from phylosophy department are more likely to have great reputation and obtain the admiration from students.</p>
+
+<h2>Number of Reviews for each professors</h2>
+
+<p>First I calculate the number of reviews each professors get and their department names.</p>
+
+<pre><code class="r">pro.num.review &lt;- ddply(review.new, .(pr), nrow)
+get.dept &lt;- function(prid) {
+    review.new$dept.name[which(review.new$pr == prid)[1]]
+}
+a &lt;- sapply(pro.num.review$pr, get.dept)
+pro.num.review$dept &lt;- a
+</code></pre>
+
+<p>Then I list some of the  most popular professors on the whole. 
+</p>
+    
+    <table class="tg">
+  <tr>
+    <th class="tg-031e">First Name</th>
+    <th class="tg-031e">Last Name</th>
+    <th class="tg-031e">Department</th>
+    <th class="tg-031e">Nugget</th>
+    <th class="tg-031e">Number of Reviews</th>
+  </tr>
+  <tr>
+    <td class="tg-031e">Sunil</td>
+    <td class="tg-031e">Gulati</td>
+    <td class="tg-031e">Economics</td>
+    <td class="tg-031e">silver</td>
+    <td class="tg-031e">90</td>
+  </tr>
+  <tr>
+    <td class="tg-031e">Deborah</td>
+    <td class="tg-031e">Mowshowitz</td>
+    <td class="tg-031e">CORE</td>
+    <td class="tg-031e">none</td>
+    <td class="tg-031e">81</td>
+  </tr>
+  <tr>
+    <td class="tg-031e">Jack</td>
+    <td class="tg-031e">McGourty</td>
+    <td class="tg-031e">Psychology</td>
+    <td class="tg-031e">none</td>
+    <td class="tg-031e">67</td>
+  </tr>
+  <tr>
+    <td class="tg-031e">Xavier</td>
+    <td class="tg-031e">Sala-i-Martin</td>
+    <td class="tg-031e">Economics</td>
+    <td class="tg-031e">silver</td>
+    <td class="tg-031e">64</td>
+  </tr>
+  <tr>
+    <td class="tg-031e">Michael</td>
+    <td class="tg-031e">Stanislawski</td>
+    <td class="tg-031e">Mathematics</td>
+    <td class="tg-031e">none</td>
+    <td class="tg-031e">61</td>
+  </tr>
+  <tr>
+    <td class="tg-031e">Richard</td>
+    <td class="tg-031e">Pious</td>
+    <td class="tg-031e">Writing</td>
+    <td class="tg-031e">silver</td>
+    <td class="tg-031e">58</td>
+  </tr>
+  <tr>
+    <td class="tg-031e">Brendan</td>
+    <td class="tg-031e">O'Flaherty</td>
+    <td class="tg-031e">Economics</td>
+    <td class="tg-031e">none</td>
+    <td class="tg-031e">56</td>
+  </tr>
+  <tr>
+    <td class="tg-031e">Kimberly</td>
+    <td class="tg-031e">Marten</td>
+    <td class="tg-031e">Religion</td>
+    <td class="tg-031e">silver</td>
+    <td class="tg-031e">55</td>
+  </tr>
+  <tr>
+    <td class="tg-031e">George</td>
+    <td class="tg-031e">Saliba</td>
+    <td class="tg-031e">Philosophy</td>
+    <td class="tg-031e">none</td>
+    <td class="tg-031e">54</td>
+  </tr>
+  <tr>
+    <td class="tg-031e">Leonard</td>
+    <td class="tg-031e">Fine</td>
+    <td class="tg-031e">Slavic Languages</td>
+    <td class="tg-031e">none</td>
+    <td class="tg-031e">53</td>
+  </tr>
+</table>
+
+<p>From the table, we may notice an interesting thing that none of these professors get the &ldquo;gold&rdquo; nuggets. It shows that the professor who get many reviews may be more controversial and can&#39;t make everyone love him or her. Many reviews don&#39;t necessirily mean that the professor is very popular.</p>
+
+<p>We can also visualize this in r package rCharts.</p>
+
+<pre><code class="r">require(rCharts)
+load(&quot;EDAV.Rdata&quot;)
+r2&lt;-rPlot(revNum ~ name,data=pro_rev[1:6,],color=&quot;dept&quot;,type=&#39;bar&#39;)
+r2$set(width=800)
+r2
+</code></pre>
+
+<iframe src='
+figure/unnamed-chunk-5.html
+' scrolling='no' seamless class='rChart 
+polycharts
+ '
+id=iframe-
+chart99a355b45ef
+></iframe>
+
+<style>iframe.rChart{ width: 100%; height: 400px;}</style>
+
+<p>I also calculate the number of reviews grouping by departments. Here are the result of department &ldquo;Mathematics&rdquo; and &ldquo;Statistics&rdquo;. To make it more clear, I just make it show the professors who get more than twice the average number of reviews, and group the other professors together and name it &ldquo;Others&rdquo;.</p>
+
+<pre><code class="r">require(plyr)
+pie_pro(&quot;Statistics&quot;)
+</code></pre>
+
+<iframe src='
+figure/unnamed-chunk-6.html
+' scrolling='no' seamless class='rChart 
+highcharts
+ '
+id=iframe-
+chart99a5593b1e7
+></iframe>
+
+<style>iframe.rChart{ width: 100%; height: 400px;}</style>
+
+<pre><code class="r">pie_pro(&quot;Economics&quot;)
+</code></pre>
+
+<iframe src='
+figure/unnamed-chunk-7.html
+' scrolling='no' seamless class='rChart 
+highcharts
+ '
+id=iframe-
+chart99a38b48109
+></iframe>
+
+<style>iframe.rChart{ width: 100%; height: 400px;}</style>
+
+<p>We can also see the chart in other department just by loading &ldquo;EDAV.Rdasta&rdquo; and using the function &ldquo;pie_pro&rdquo; I write. </p>
+
+<h2>Workload</h2>
+
+<p>Regular expression can be applied to workload texts to extract information like &ldquo;2 papers&rdquo;,&ldquo;no exam&rdquo;,&ldquo; one midterm&rdquo;.After some analysis, we can acutally see some difference in workloads between differenet departments.
+<img src="https://yiginger.github.io/bubble_cloud/figure/workload.png" alt=""/></p>
+
+<p>We can see that Chemistry and Chemical Engeering Department has the highest average number of midterms, and Anthropology has the least average number of midterms.
+It is interesting to see those results like the average papers and homework, but there is a problem that some information may not be able to extract only from regular expression.Maybe some students use the format that I didn&#39;t expect,so the analysis here can not include all the information about workload.</p>
+
+<h1>Summary</h1>
+
+<p>In this project, I did some exploratory data analysis I&#39;ve done for the CULPA data analysis. It includes the analysi of reviews, nuggets, workloads and the sometimes grouping by differenct departments. Some obvious conlcusions are that professors get more reviews are less likely to get &ldquo;gold&rdquo; nuggets.There are some difference in the workloads between different departments, but the word frequency in reviews of different departments do not have significant differences.</p>
+    
+    <p>  In terms of whether the predictive analysis, word choice is not as important as we thought in rating professors and determining whether a review is funny or not. The Naive Bayes algorithm assumes that the probability of presence of two words are independent but this is not the case here, which could be a reason why this method doesn’t work well for predicting. Also, it seems that word choice is not important here, it is content and style that really matter!</p>
+    
+ </p>
+
+>>>>>>> 64d16ccd5c36235f07bd9ffea217c0882e55cf52:EDAV_YiJiang.html
 </body>
 
 </html>

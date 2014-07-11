@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <title>EDAV final project --Yi Jiang </title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <!-- CSS concatenated and minified via ant build script-->
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <!-- end CSS-->
+
+  <script src="js/libs/modernizr-2.0.6.min.js"></script>
+<title>Analysis of CUPLA in Columbia University</title>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: #990073
+   }
+
+   pre .number {
+     color: #099;
+   }
+
+   pre .comment {
+     color: #998;
+     font-style: italic
+   }
+
+   pre .keyword {
+     color: #900;
+     font-weight: bold
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: #d14;
+   }
+    
+    .tg  {border-collapse:collapse;border-spacing:0;border-color:#aabcfe;}
+.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#aabcfe;color:#669;background-color:#e8edff;}
+.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#aabcfe;color:#039;background-color:#b9c9fe;}
+.tg .tg-0ord{text-align:right}
+.tg .tg-ifyx{background-color:#D2E4FC;text-align:right}
+.tg .tg-s6z2{text-align:center}
+.tg .tg-vn4c{background-color:#D2E4FC}
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+<!-- MathJax scripts -->
+<script type="text/javascript" src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 13px;
+}
+
+body {
+  max-width: 800px;
+  margin: auto;
+  line-height: 20px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre, img {
+  max-width: 100%;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code {
+  font-size: 92%;
+  border: 1px solid #ccc;
+}
+
+code[class] {
+  background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+</style>
+
+
+
+</head>
+
+<body>
+<h1>Analysis of CUPLA in Columbia University</h1>
+
+<h1>Exploratory Data Analysi And Visualization &mdash;Yi Jiang(yj2306)</h1>
+
+<h1>Introduction</h1>
+
+<p>For my project I decided to apply text analysis skills to derive information from a dataset from CULPA, a website that allows students to review professors from past classes and to track other&#39;s opinions on their potential classes for the next semester.</p>
+
+<p>Using CULPA, students can write a review and comment on professor, course&#39;s content, and its workload. Other students have the option of agreeing or disagreeing with a particular review, and deciding whether a review is funny. Students also nominate professors for silver or gold nuggets, which are given to professors by CULPA based on their reviews.</p>
+
+<h1>Data</h1>
+
+<p>The data from CULPA in JSON format. There are two files in the data, one with professors, and one with reviews. Rjson package in R Studio is applied to convert the JSON objects to R objects. In total there are about 3000 professors and 21000 reviews.The entire dataset can be found on their website.<a href="http://www.culpa.info/">http://www.culpa.info/</a> </p>
+
+<h1>Objective</h1>
+
+<p>With this dataset,some exploratory data analysis can be applied to it. Try to ask some questions and look if we can find answer from this dataset. Those questions can be:</p>
+
+<ul>
+<li>Who get more reviews? </li>
+<li>What are those words that are frequently used in reviews?</li>
+<li>What&#39;s the distribution of nuggets in different departments?</li>
+<li>Which department has the highest workload?</li>
+</ul>
+
+<p>We can just do some exploratory analysis to see. Many algorithms in data mining and machine learning can also be applied to explore other interesting results from this dataset.</p>
+
+<h1>Analysis</h1>
+
+<h2>Data Cleanup</h2>
+
+<h3>Read Data</h3>
+
+<p>The data is in the format of json, so I need to use R package rjson to read data. And the data I get is actually a very complex list, so I should also convert it into a dataframe object, which is more comfortable to use in R.</p>
+
+<pre><code class="r">require(rjson)
+courses &lt;- fromJSON(file = &quot;/volumes/bootcamp/documents/EDAV/courses new.json&quot;)
+prof &lt;- fromJSON(file = &quot;/volumes/bootcamp/documents/EDAV/professors new.json&quot;)
+review &lt;- fromJSON(file = &quot;/volumes/bootcamp/documents/EDAV/reviews new.json&quot;)
+require(plyr)
+dep &lt;- llply(courses, function(x) x$departments)
+ff &lt;- function(x) {
+    if (length(x) == 0) {
+        return(0)
+    } else return(x[[1]]$name)
+}
+dept.name &lt;- sapply(dep, ff)
+c.id &lt;- sapply(courses, function(x) x$id)
+course.df &lt;- data.frame(id = c.id, dept.name = dept.name)
+d.name &lt;- sapply(review, function(x) course.df[which(course.df$id == x$courses), 
+    &quot;dept.name&quot;])
+d &lt;- sapply(d.name, function(x) as.character(x))
+r.dept.name &lt;- unlist(d)
+nugget &lt;- sapply(prof, function(x) x$nugget)
+f.name &lt;- sapply(prof, function(x) x$first_name)
+l.name &lt;- sapply(prof, function(x) x$last_name)
+m.name &lt;- sapply(prof, function(x) x$middle_name)
+p.id &lt;- sapply(prof, function(x) x$id)
+prof.df &lt;- data.frame(nug = nugget, f.name = f.name, l.name = l.name, p.id = p.id)
+r.id &lt;- unlist(sapply(review, function(x) x$id))
+r.pr &lt;- unlist(sapply(review, function(x) x$professors))
+r.fun &lt;- unlist(sapply(review, function(x) x$funny))
+r.wl &lt;- unlist(sapply(review, function(x) x$workload))
+r.disg &lt;- unlist(sapply(review, function(x) x$disagree))
+r.g &lt;- unlist(sapply(review, function(x) x$agree))
+r.review &lt;- unlist(sapply(review, function(x) x$review))
+r.courses &lt;- unlist(sapply(review, function(x) x$courses))
+r.date &lt;- unlist(sapply(review, function(x) x$date))
+
+review.df &lt;- cbind(id = r.id, pr = r.pr, fun = r.fun, disagree = r.disg, agree = r.g, 
+    workload = r.wl, review = r.review, courses = r.courses, date = r.date)
+review.df &lt;- data.frame(review.df)
+
+</code></pre>
+
+<p>Through those pre-processing, I make all the information into three dataframes and all the review texts are in the colume &ldquo;review&rdquo; of dataframe <em>review.df</em></p>
+
+<h3>Text Pre-processing</h3>
+
+<p>As for data pre-processing, we used the tm package to build a corpus from character vectors of reviews. Then we applied a number of transformations, including changing letters to lower case, removing punctuations, removing white space, and removing stopwords. The remaining terms then became effective as the textual representation. </p>
+
+<pre><code class="r">load(&quot;.Rdata&quot;)
+texts &lt;- r.review
+## vector, each element is a review
+require(tm)
+require(Snowball)
+corpus &lt;- Corpus(VectorSource(texts))
+## do some standard processes of cleaning data
+corpus &lt;- tm_map(corpus, tolower)
+corpus &lt;- tm_map(corpus, removeWords, stopwords(&quot;english&quot;))
+corpus &lt;- tm_map(corpus, stripWhitespace)
+corpus &lt;- tm_map(corpus, removePunctuation)
+# generate the document-term matrix
+dtm &lt;- DocumentTermMatrix(corpus)
+term &lt;- colnames(dtm)
+tabu &lt;- tm_term_score(dtm, term, slam::col_sums)
+# generate the count for each words in dict
+sort.dict &lt;- sort(tabu, decreasing = TRUE)
+dict &lt;- names(sort.dict)
+</code></pre>
+
+<p>Through this changing, I can get the frequency of each words in the whole dataset of reviews.</p>
+
+<h3>Other Information</h3>
+
+<h2>Text Mining</h2>
+
+<p>After generating a document-term matrix from clean corpus, tasks like classification can be applied directly to it.</p>
+
+<p>For each review, I retrieved the actual textual contents of the review, and workload, the numbers of &ldquo;agree&rdquo;/ &ldquo;disagree&rdquo;/ &ldquo;funny review&quot;received by the review, and the nuggets assigned to each professor.</p>
+
+<p>I split the projects into two parts: analysis and prediction. For analysis we looked at the data, trying to characterize behavior across departments in terms of word use, workload declaration. The first predictive objective of this project is to predict whether or not a professor has a nugget and its type based on other variables with a main focus on review and workload. The second predictive goal is to predict whether the review is regarded as funny.</p>
+
+<h2>World Frequency</h2>
+
+<p>I use the word frequency bubble to show the most frequenly used words in those reviews.</p>
+
+
+  <div id="container" class="container">
+      <select id="text-select">
+          <option value="workload"> Workload</option>
+          <option value="bubble"> CULPA</option>
+           <option value="stat"> Statistics Department</option>
+           <option value="math"> Mathematics Department</option>
+           <option value="astronomy"> Astronomy Department</option>
+           <option value="music"> Music Department</option>
+           <option value="physics"> Physics Department</option>
+           <option value="education"> Education Department</option>
+           <option value="economics"> Economics Department</option>
+          
+      </select>
+    <header>
+    <h1>Bubble Cloud</h1>
+    <h2>The most frequently used words in:</h2>
+      <h2 id="book-title"></h2>
+    </header>
+    <div id="main" role="main">
+      <div id="vis"></div>
+      <div id="status"></div>
+      <div id="controls">
+        <h3>Jitter</h3>
+        <form id="jitter" oninput="output.value = (jitter_input.value / 200).toFixed(3)" >
+          <input id="jitter_input" type="range" min="0" max="400" value="100" style="width:240px;">
+          <output name="output" for="input">0.5</output>
+        </form>
+      </div>
+    </div>
+  </div> <!--! end of #container -->
+
+
+  <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script> -->
+  <script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.2.min.js"><\/script>')</script>
+
+
+  <script defer src="js/plugins.js"></script>
+  <script src="js/libs/coffee-script.js"></script>
+  <script src="js/libs/d3.v2.js"></script>
+  <script type="text/coffeescript" src="coffee/vis.coffee"></script>
+  <script type="text/javascript">
+  </script>
+
+
+  <script> 
+    window._gaq = [['_setAccount','UA-17355070-1'],['_trackPageview'],['_trackPageLoadTime']];
+    Modernizr.load({
+      load: ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js'
+    });
+  </script>
+
+
+  <!--[if lt IE 7 ]>
+    <script src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.3/CFInstall.min.js"></script>
+    <script>window.attachEvent('onload',function(){CFInstall.check({mode:'overlay'})})</script>
+  <![endif]-->
+  
+
+<p>From the word bubble we can see that there is no very significant difference between word frequency in each departments.</p>
+
+    <p>I also applied the Niave Bayes Classifier to try to predict whehter a reivew is funny throught the frequency of each words, it turns out that the prediction is not reliable at all. It means that there is no significant difference in words frequency between funny and not funny reviews</p>
+
+<h2>Nuggets</h2>
+
+<p>Nuggets is the evaluation CULPA gives to professors. It can be regarded as a categorical variable and has three levels:&quot;gold&rdquo;,&ldquo;silver&rdquo;,&ldquo;none&rdquo;. I also seperate the nuggets data according to different deoartments. Here is a chart of the number of gold nuggets vs none nuggets in each departments.
+</p>
+    
+    
+        
+<!-- BubbleChart generated in R 3.0.3 by googleVis 0.4.7 package -->
+<!-- Sat May 10 15:00:42 2014 -->
+
+
+<!-- jsHeader -->
+<script type="text/javascript">
+
+
+// jsData 
+function gvisDataBubbleChartID2615d3a3ee4 () {
+var data = new google.visualization.DataTable();
+var datajson =
+[
+ [
+ "African American Studies",
+20,
+7,
+"African American Studies" 
+],
+[
+ "American Studies",
+9,
+2,
+"American Studies" 
+],
+[
+ "Anthropology",
+220,
+17,
+"Anthropology" 
+],
+[
+ "Applied Physics and Applied Mathematics",
+43,
+3,
+"Applied Physics and Applied Mathematics" 
+],
+[
+ "Archaeology",
+4,
+0,
+"Archaeology" 
+],
+[
+ "Architecture",
+27,
+3,
+"Architecture" 
+],
+[
+ "Art History",
+172,
+20,
+"Art History" 
+],
+[
+ "Asian American Studies",
+6,
+0,
+"Asian American Studies" 
+],
+[
+ "Astronomy",
+91,
+9,
+"Astronomy" 
+],
+[
+ "Biology & Biomedical Engineering",
+212,
+22,
+"Biology & Biomedical Engineering" 
+],
+[
+ "Business",
+13,
+1,
+"Business" 
+],
+[
+ "Center for Study of Ethnicity and Race",
+23,
+2,
+"Center for Study of Ethnicity and Race" 
+],
+[
+ "Chemistry and Chemical Engineering",
+409,
+31,
+"Chemistry and Chemical Engineering" 
+],
+[
+ "Civil Engineering",
+14,
+0,
+"Civil Engineering" 
+],
+[
+ "Classics",
+81,
+3,
+"Classics" 
+],
+[
+ "Computer Science",
+302,
+31,
+"Computer Science" 
+],
+[
+ "Continuing Education",
+4,
+0,
+"Continuing Education" 
+],
+[
+ "Dance",
+90,
+7,
+"Dance" 
+],
+[
+ "Earth and Environmental Engineering",
+14,
+1,
+"Earth and Environmental Engineering" 
+],
+[
+ "Earth and Environmental Science",
+105,
+9,
+"Earth and Environmental Science" 
+],
+[
+ "East-Asian Languages and Cultures",
+269,
+31,
+"East-Asian Languages and Cultures" 
+],
+[
+ "Ecology, Evolution, and Environmental Biology",
+51,
+3,
+"Ecology, Evolution, and Environmental Biology" 
+],
+[
+ "Economics",
+489,
+51,
+"Economics" 
+],
+[
+ "Education",
+9,
+1,
+"Education" 
+],
+[
+ "Electrical Engineering",
+44,
+5,
+"Electrical Engineering" 
+],
+[
+ "English and Comparative Literature",
+596,
+44,
+"English and Comparative Literature" 
+],
+[
+ "Film",
+61,
+3,
+"Film" 
+],
+[
+ "First-Year Seminars",
+103,
+10,
+"First-Year Seminars" 
+],
+[
+ "French",
+236,
+23,
+"French" 
+],
+[
+ "Germanic Languages and Literature  ",
+59,
+7,
+"Germanic Languages and Literature  " 
+],
+[
+ "History",
+570,
+44,
+"History" 
+],
+[
+ "Human Rights",
+7,
+0,
+"Human Rights" 
+],
+[
+ "Industrial Engineering and Operations Research",
+101,
+6,
+"Industrial Engineering and Operations Research" 
+],
+[
+ "Italian",
+130,
+7,
+"Italian" 
+],
+[
+ "Latino Studies",
+5,
+0,
+"Latino Studies" 
+],
+[
+ "Law School",
+2,
+0,
+"Law School" 
+],
+[
+ "Mathematics",
+567,
+55,
+"Mathematics" 
+],
+[
+ "Mechanical Engineering",
+20,
+3,
+"Mechanical Engineering" 
+],
+[
+ "Medicine",
+1,
+0,
+"Medicine" 
+],
+[
+ "Middle Eastern, South Asian, and African Studies",
+196,
+11,
+"Middle Eastern, South Asian, and African Studies" 
+],
+[
+ "Music",
+154,
+12,
+"Music" 
+],
+[
+ "Philosophy",
+218,
+34,
+"Philosophy" 
+],
+[
+ "Physical Education",
+45,
+3,
+"Physical Education" 
+],
+[
+ "Physical Therapy",
+0,
+1,
+"Physical Therapy" 
+],
+[
+ "Physics",
+249,
+22,
+"Physics" 
+],
+[
+ "Political Science",
+552,
+35,
+"Political Science" 
+],
+[
+ "Psychology",
+495,
+33,
+"Psychology" 
+],
+[
+ "Religion",
+144,
+11,
+"Religion" 
+],
+[
+ "School of International & Public Affairs",
+18,
+1,
+"School of International & Public Affairs" 
+],
+[
+ "School of Journalism",
+3,
+0,
+"School of Journalism" 
+],
+[
+ "Slavic Languages",
+71,
+8,
+"Slavic Languages" 
+],
+[
+ "Sociology",
+172,
+18,
+"Sociology" 
+],
+[
+ "Spanish and Portuguese",
+357,
+32,
+"Spanish and Portuguese" 
+],
+[
+ "Speech",
+3,
+0,
+"Speech" 
+],
+[
+ "Statistics",
+141,
+15,
+"Statistics" 
+],
+[
+ "Sustainable Development",
+1,
+0,
+"Sustainable Development" 
+],
+[
+ "Swedish",
+5,
+2,
+"Swedish" 
+],
+[
+ "Theater",
+25,
+2,
+"Theater" 
+],
+[
+ "Underwater Basket Weaving",
+15,
+1,
+"Underwater Basket Weaving" 
+],
+[
+ "Urban Studies",
+50,
+4,
+"Urban Studies" 
+],
+[
+ "Visual Arts",
+39,
+3,
+"Visual Arts" 
+],
+[
+ "Women's Studies",
+56,
+6,
+"Women's Studies" 
+],
+[
+ "Writing",
+106,
+13,
+"Writing" 
+] 
+];
+data.addColumn('string','dept.name');
+data.addColumn('number','none');
+data.addColumn('number','gold');
+data.addColumn('string','dept.name.1');
+data.addRows(datajson);
+return(data);
+}
+
+
+// jsDrawChart
+function drawChartBubbleChartID2615d3a3ee4() {
+var data = gvisDataBubbleChartID2615d3a3ee4();
+var options = {};
+options["hAxis"] = {minValue:75, maxValue:125};
+options["hAxis.textPosition"] = "none";
+options["width"] =    800;
+options["height"] =    600;
+
+
+    var chart = new google.visualization.BubbleChart(
+    document.getElementById('BubbleChartID2615d3a3ee4')
+    );
+    chart.draw(data,options);
+    
+
+}
+  
+
+
+// jsDisplayChart
+(function() {
+var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+var chartid = "corechart";
+  
+// Manually see if chartid is in pkgs (not all browsers support Array.indexOf)
+var i, newPackage = true;
+for (i = 0; newPackage && i < pkgs.length; i++) {
+if (pkgs[i] === chartid)
+newPackage = false;
+}
+if (newPackage)
+  pkgs.push(chartid);
+  
+// Add the drawChart function to the global list of callbacks
+callbacks.push(drawChartBubbleChartID2615d3a3ee4);
+})();
+function displayChartBubbleChartID2615d3a3ee4() {
+  var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+  var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+  window.clearTimeout(window.__gvisLoad);
+  // The timeout is set to 100 because otherwise the container div we are
+  // targeting might not be part of the document yet
+  window.__gvisLoad = setTimeout(function() {
+  var pkgCount = pkgs.length;
+  google.load("visualization", "1", { packages:pkgs, callback: function() {
+  if (pkgCount != pkgs.length) {
+  // Race condition where another setTimeout call snuck in after us; if
+  // that call added a package, we must not shift its callback
+  return;
+}
+while (callbacks.length > 0)
+callbacks.shift()();
+} });
+}, 100);
+}
+
+
+// jsFooter
+</script>
+
+
+<!-- jsChart -->  
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartBubbleChartID2615d3a3ee4"></script>
+
+
+<!-- divChart -->
+  
+<div id="BubbleChartID2615d3a3ee4"
+  style="width: 800px; height: 600px;">
+</div>
+
+
+
+<p>In this chart, the x axis is the number of &ldquo;none&rdquo; nuggets in one department and the y axis is the number of &ldquo;gold&rdquo; nuggets in one department. So we can infer that the larger the slope of the line between bubble and origin, the better evaluation a department get in terms of the number of nuggets. From this chart, we can see that Philosophy department has the largest slope, i.e. has more propotion of &ldquo;gold&rdquo; nuggets, while the slope of Political Science department is relatively small. It is unreliable to make any infer just from this chart but it is intersting to guess the underlying reason. It might because students think philosophy is interesting but political science is boring, or the professor from phylosophy department are more likely to have great reputation and obtain the admiration from students.</p>
+
+<h2>Number of Reviews for each professors</h2>
+
+<p>First I calculate the number of reviews each professors get and their department names.</p>
+
+<pre><code class="r">pro.num.review &lt;- ddply(review.new, .(pr), nrow)
+get.dept &lt;- function(prid) {
+    review.new$dept.name[which(review.new$pr == prid)[1]]
+}
+a &lt;- sapply(pro.num.review$pr, get.dept)
+pro.num.review$dept &lt;- a
+</code></pre>
+
+<p>Then I list some of the  most popular professors on the whole. 
+</p>
+    
+    <table class="tg">
+  <tr>
+    <th class="tg-031e">First Name</th>
+    <th class="tg-031e">Last Name</th>
+    <th class="tg-031e">Department</th>
+    <th class="tg-031e">Nugget</th>
+    <th class="tg-031e">Number of Reviews</th>
+  </tr>
+  <tr>
+    <td class="tg-031e">Sunil</td>
+    <td class="tg-031e">Gulati</td>
+    <td class="tg-031e">Economics</td>
+    <td class="tg-031e">silver</td>
+    <td class="tg-031e">90</td>
+  </tr>
+  <tr>
+    <td class="tg-031e">Deborah</td>
+    <td class="tg-031e">Mowshowitz</td>
+    <td class="tg-031e">CORE</td>
+    <td class="tg-031e">none</td>
+    <td class="tg-031e">81</td>
+  </tr>
+  <tr>
+    <td class="tg-031e">Jack</td>
+    <td class="tg-031e">McGourty</td>
+    <td class="tg-031e">Psychology</td>
+    <td class="tg-031e">none</td>
+    <td class="tg-031e">67</td>
+  </tr>
+  <tr>
+    <td class="tg-031e">Xavier</td>
+    <td class="tg-031e">Sala-i-Martin</td>
+    <td class="tg-031e">Economics</td>
+    <td class="tg-031e">silver</td>
+    <td class="tg-031e">64</td>
+  </tr>
+  <tr>
+    <td class="tg-031e">Michael</td>
+    <td class="tg-031e">Stanislawski</td>
+    <td class="tg-031e">Mathematics</td>
+    <td class="tg-031e">none</td>
+    <td class="tg-031e">61</td>
+  </tr>
+  <tr>
+    <td class="tg-031e">Richard</td>
+    <td class="tg-031e">Pious</td>
+    <td class="tg-031e">Writing</td>
+    <td class="tg-031e">silver</td>
+    <td class="tg-031e">58</td>
+  </tr>
+  <tr>
+    <td class="tg-031e">Brendan</td>
+    <td class="tg-031e">O'Flaherty</td>
+    <td class="tg-031e">Economics</td>
+    <td class="tg-031e">none</td>
+    <td class="tg-031e">56</td>
+  </tr>
+  <tr>
+    <td class="tg-031e">Kimberly</td>
+    <td class="tg-031e">Marten</td>
+    <td class="tg-031e">Religion</td>
+    <td class="tg-031e">silver</td>
+    <td class="tg-031e">55</td>
+  </tr>
+  <tr>
+    <td class="tg-031e">George</td>
+    <td class="tg-031e">Saliba</td>
+    <td class="tg-031e">Philosophy</td>
+    <td class="tg-031e">none</td>
+    <td class="tg-031e">54</td>
+  </tr>
+  <tr>
+    <td class="tg-031e">Leonard</td>
+    <td class="tg-031e">Fine</td>
+    <td class="tg-031e">Slavic Languages</td>
+    <td class="tg-031e">none</td>
+    <td class="tg-031e">53</td>
+  </tr>
+</table>
+
+<p>From the table, we may notice an interesting thing that none of these professors get the &ldquo;gold&rdquo; nuggets. It shows that the professor who get many reviews may be more controversial and can&#39;t make everyone love him or her. Many reviews don&#39;t necessirily mean that the professor is very popular.</p>
+
+<p>We can also visualize this in r package rCharts.</p>
+
+<pre><code class="r">require(rCharts)
+load(&quot;EDAV.Rdata&quot;)
+r2&lt;-rPlot(revNum ~ name,data=pro_rev[1:6,],color=&quot;dept&quot;,type=&#39;bar&#39;)
+r2$set(width=800)
+r2
+</code></pre>
+
+<iframe src='
+figure/unnamed-chunk-5.html
+' scrolling='no' seamless class='rChart 
+polycharts
+ '
+id=iframe-
+chart99a355b45ef
+></iframe>
+
+<style>iframe.rChart{ width: 100%; height: 400px;}</style>
+
+<p>I also calculate the number of reviews grouping by departments. Here are the result of department &ldquo;Mathematics&rdquo; and &ldquo;Statistics&rdquo;. To make it more clear, I just make it show the professors who get more than twice the average number of reviews, and group the other professors together and name it &ldquo;Others&rdquo;.</p>
+
+<pre><code class="r">require(plyr)
+pie_pro(&quot;Statistics&quot;)
+</code></pre>
+
+<iframe src='
+figure/unnamed-chunk-6.html
+' scrolling='no' seamless class='rChart 
+highcharts
+ '
+id=iframe-
+chart99a5593b1e7
+></iframe>
+
+<style>iframe.rChart{ width: 100%; height: 400px;}</style>
+
+<pre><code class="r">pie_pro(&quot;Economics&quot;)
+</code></pre>
+
+<iframe src='
+figure/unnamed-chunk-7.html
+' scrolling='no' seamless class='rChart 
+highcharts
+ '
+id=iframe-
+chart99a38b48109
+></iframe>
+
+<style>iframe.rChart{ width: 100%; height: 400px;}</style>
+
+<p>We can also see the chart in other department just by loading &ldquo;EDAV.Rdasta&rdquo; and using the function &ldquo;pie_pro&rdquo; I write. </p>
+
+<h2>Workload</h2>
+
+<p>Regular expression can be applied to workload texts to extract information like &ldquo;2 papers&rdquo;,&ldquo;no exam&rdquo;,&ldquo; one midterm&rdquo;.After some analysis, we can acutally see some difference in workloads between differenet departments.
+<img src="https://yiginger.github.io/bubble_cloud/figure/workload.png" alt=""/></p>
+
+<p>We can see that Chemistry and Chemical Engeering Department has the highest average number of midterms, and Anthropology has the least average number of midterms.
+It is interesting to see those results like the average papers and homework, but there is a problem that some information may not be able to extract only from regular expression.Maybe some students use the format that I didn&#39;t expect,so the analysis here can not include all the information about workload.</p>
+
+<h1>Summary</h1>
+
+<p>In this project, I did some exploratory data analysis I&#39;ve done for the CULPA data analysis. It includes the analysi of reviews, nuggets, workloads and the sometimes grouping by differenct departments. Some obvious conlcusions are that professors get more reviews are less likely to get &ldquo;gold&rdquo; nuggets.There are some difference in the workloads between different departments, but the word frequency in reviews of different departments do not have significant differences.</p>
+    
+    <p>  In terms of whether the predictive analysis, word choice is not as important as we thought in rating professors and determining whether a review is funny or not. The Naive Bayes algorithm assumes that the probability of presence of two words are independent but this is not the case here, which could be a reason why this method doesn’t work well for predicting. Also, it seems that word choice is not important here, it is content and style that really matter!</p>
+    
+ </p>
+
+</body>
+
+</html>
